@@ -50,13 +50,29 @@ class ChompSorter:
 				for obj in self.current_scene.buttons:
 					if obj.border_rect.collidepoint(event.pos):
 						clicked_obj = obj
+				if type(clicked_obj) == Button:
+					if clicked_obj.tag in SORT_NAMES:
+						self.change_scene("GRAPH")
+					if clicked_obj.tag == "Menu":
+						self.change_scene("MENU")
 
-def test():
+def populate():
+	sort_layout=[["Radix Sort", "Bitonic Sort", "Pancake Sort"], ["Cocktail Shaker Sort", "Stooge Sort", "Cycle Sort"]]
+
 	btns = []
-	btns.append(Button("BUTTON", (SCREEN_RES[0]/2, SCREEN_RES[1]/2)))
-	btns.append(Button("LARGE BUTTON", (SCREEN_RES[0]/2, 2*SCREEN_RES[1]/3), LRG_BTN_FSIZE))
+	for i in range(len(sort_layout)):
+		for j in range(len(sort_layout[i])):
+			btns.append(Button(sort_layout[i][j], (SCREEN_RES[0]*(j+1)/(len(sort_layout[i])+1), SCREEN_RES[1]/2+SCREEN_RES[1]/2*(i+1)/(len(sort_layout)+1)), btn_size=(SCREEN_RES[0]/5, SCREEN_RES[1]/10)))
 
 	lbls = []
-	lbls.append(Label("LABEL", (SCREEN_RES[0]/2, SCREEN_RES[1]/3)))
-	test_scn = Scene("TEST", btns, lbls)
-	return ChompSorter([test_scn])
+	lbls.append(Label("Chomp Sorter", (SCREEN_RES[0]/2, SCREEN_RES[1]/4)))
+	lbls.append(Label("Select a sort to begin!", (SCREEN_RES[0]/2, SCREEN_RES[1]*2/4), SML_LBL_FSIZE))
+
+	menu_scene = Scene("MENU", btns, lbls)
+
+	btns = []
+	btns.append(Button("Menu", (SCREEN_RES[0]/2, 50)))
+	lbls = []
+	graph_scene = Scene("GRAPH", btns, lbls)
+
+	return ChompSorter([menu_scene, graph_scene])

@@ -5,6 +5,7 @@ class Label():
 		self.font = pygame.font.Font(FONT, font_size)
 		self.rendered_text = self.font.render(txt, True, color)
 		self.txt_rect = self.rendered_text.get_rect(center=location)
+		self.tag = txt
 	
 	def render(self, screen):
 		screen.blit(self.rendered_text, self.txt_rect)

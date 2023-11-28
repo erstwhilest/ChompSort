@@ -1,7 +1,7 @@
 import chompsorter
 
 def main():
-	application = chompsorter.test()
+	application = chompsorter.populate()
 	application.loop()
 
 if __name__ == "__main__":
