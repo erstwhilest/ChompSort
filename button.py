@@ -2,7 +2,7 @@ from label import Label
 from constants import *
 
 class Button(Label):
-	def __init__(self, txt, location, font_size=BTN_FSIZE, bg_color=ORANGE, txt_color=BLACK, bdr_color=BLACK, btn_size=None):
+	def __init__(self, txt, location, font_size=BTN_FSIZE, bg_color=ORANGE, txt_color=WHITE, bdr_color=WHITE, btn_size=None):
 		super().__init__(txt, location, font_size, txt_color)
 		if btn_size:
 			self.rect = pygame.Rect(self.txt_rect)

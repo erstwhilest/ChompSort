@@ -20,6 +20,8 @@ BTN_BORDER = int(SCREEN_RES[0]/360)+1
 BTN_PAD = int(SCREEN_RES[0]/72)
 FONT = "CascadiaMono.ttf"
 
+YPAD = SCREEN_RES[0]/48
+
 # Colors
 BLACK = (0, 0, 0)
 EXTRA_LIGHT_GRAY = (212, 212, 212)
