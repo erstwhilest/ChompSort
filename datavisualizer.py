@@ -32,6 +32,8 @@ class DataVisualizer:
 		self.sort_name=sort_name
 		if sort_name == "Stooge Sort":
 			self.generator=sortfunctions.stooge_sort(self.data,0,self.data_count-1)
+		elif sort_name == "Radix Sort":
+			self.generator = sortfunctions.radix_sort(self.data, 0, self.data_count - 1)
 	
 	def clear_colors(self):
 		for i in range(self.data_count):

@@ -78,6 +78,7 @@ class ChompSorter:
 						self.data_visualizer.shuffle_data()
 					if clicked_obj.tag == "Start":
 						self.data_visualizer.sorting=True
+
 					if clicked_obj.tag == "Stop":
 						self.data_visualizer.sorting=False
 
