@@ -32,10 +32,6 @@ class DataVisualizer:
 		self.sort_name=sort_name
 		if sort_name == "Stooge Sort":
 			self.generator=sortfunctions.stooge_sort(self.data,0,self.data_count-1)
-		elif sort_name == "Cocktail Shaker Sort":
-			self.generator=sortfunctions.cocktail_shaker_sort(self.data,self.data_count)
-		elif sort_name == "Pancake Sort":
-			self.generator=sortfunctions.pancake_sort(self.data)
 	
 	def clear_colors(self):
 		for i in range(self.data_count):
