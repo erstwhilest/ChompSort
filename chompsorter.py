@@ -8,9 +8,9 @@ from datavisualizer import DataVisualizer
 class ChompSorter:
 	def __init__(self, scenes, data_visualizer):
 		self.screen = pygame.display.set_mode(SCREEN_RES)
-		pygame.init()
 		pygame.display.set_caption("Chomp Sorter")
 		pygame.display.set_icon(pygame.image.load('CHOMPSORT_ICON_2.jpeg'))
+		pygame.init()
 		self.clock = pygame.time.Clock()
 		
 		self.scenes = scenes
