@@ -4,19 +4,20 @@ from button import Button
 from label import Label
 from soundmanager import SoundManager
 from datavisualizer import DataVisualizer
+# from slider import Slider
 
 class ChompSorter:
 	def __init__(self, scenes, data_visualizer):
 		self.screen = pygame.display.set_mode(SCREEN_RES)
-		pygame.display.set_caption("Chomp Sorter")
-		pygame.display.set_icon(pygame.image.load('CHOMPSORT_ICON_2.jpeg'))
 		pygame.init()
+		pygame.display.set_caption("Chomp Sorter")
 		self.clock = pygame.time.Clock()
 		
 		self.scenes = scenes
 		self.current_scene = scenes[0]
 
-		self.data_visualizer = data_visualizer
+		# self.data_visualizers = data_visualizers
+		self.data_visualizer=data_visualizer
 
 		self.running = True
 
@@ -27,7 +28,7 @@ class ChompSorter:
 
 	def render(self):
 		self.current_scene.render(self.screen)
-
+	
 	def loop(self):
 		while self.running:
 			self.screen.fill(BLACK)
@@ -39,10 +40,10 @@ class ChompSorter:
 
 			if self.last_time // self.period != self.time // self.period:
 				self.data_visualizer.step()
+				# for dv in self.data_visualizers:
+				# 	dv.step()
 
 			self.render()
-
-			
 
 			pygame.display.update()
 			self.clock.tick()
@@ -72,14 +73,24 @@ class ChompSorter:
 					if clicked_obj.tag in SORT_NAMES:
 						self.change_scene("GRAPH")
 						self.data_visualizer.set_sort(clicked_obj.tag)
+						# for dv in self.data_visualizers:
+						# 	dv.set_sort(clicked_obj.tag)
 					if clicked_obj.tag == "Menu":
 						self.change_scene("MENU")
 					if clicked_obj.tag == "Shuffle":
 						self.data_visualizer.shuffle_data()
+						# for dv in self.data_visualizers:
+						# 	dv.shuffle_data()
 					if clicked_obj.tag == "Start":
+						self.data_visualizer.restart_sort()
 						self.data_visualizer.sorting=True
+						# for dv in self.data_visualizers:
+						# 	dv.restart_sort()
+						# 	dv.sorting=True
 					if clicked_obj.tag == "Stop":
 						self.data_visualizer.sorting=False
+						# for dv in self.data_visualizers:
+						# 	dv.sorting=False
 
 def populate():
 	sort_layout=[["Radix Sort", "Bitonic Sort", "Pancake Sort"], ["Cocktail Shaker Sort", "Stooge Sort", "Cycle Sort"]]
@@ -101,8 +112,10 @@ def populate():
 	click.append(Button("Start", (SCREEN_RES[0]*1/8, YPAD)))
 	click.append(Button("Stop", (SCREEN_RES[0]*2/8, YPAD)))
 	draw = []
-	data=DataVisualizer(10, pygame.Rect(YPAD*2, YPAD*2, SCREEN_RES[0]-YPAD*4, SCREEN_RES[1]))
+	data=DataVisualizer(10, pygame.Rect(YPAD*2, YPAD*2, SCREEN_RES[0]-YPAD*4, SCREEN_RES[1]-YPAD*2))
+	# data.append(DataVisualizer(50, pygame.Rect(SCREEN_RES[0]/2+YPAD*2, YPAD*2, SCREEN_RES[0]/2-YPAD*4, SCREEN_RES[1])))
 	draw.append(data)
+	# draw.append(Slider((0, 0), 500, 0, 100))
 	graph_scene = Scene("GRAPH", draw, click)
 
 	return ChompSorter([menu_scene, graph_scene], data)

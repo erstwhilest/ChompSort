@@ -41,3 +41,6 @@ BTN_FSIZE = int(SCREEN_RES[0]/60)
 LRG_BTN_FSIZE = int(SCREEN_RES[0]/30)
 
 NUMBERS = [pygame.K_1, pygame.K_2, pygame.K_3, pygame.K_4, pygame.K_5, pygame.K_6, pygame.K_7, pygame.K_8, pygame.K_9]
+
+THUMB_SIZE = (15, 30)
+TRACK_HEIGHT = 5
