@@ -10,6 +10,7 @@ class ChompSorter:
 		self.screen = pygame.display.set_mode(SCREEN_RES)
 		pygame.init()
 		pygame.display.set_caption("Chomp Sorter")
+		pygame.display.set_icon(pygame.image.load('CHOMPSORT_ICON_2.jpeg'))
 		self.clock = pygame.time.Clock()
 		
 		self.scenes = scenes
@@ -26,7 +27,7 @@ class ChompSorter:
 
 	def render(self):
 		self.current_scene.render(self.screen)
-	
+
 	def loop(self):
 		while self.running:
 			self.screen.fill(BLACK)
