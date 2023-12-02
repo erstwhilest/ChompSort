@@ -1,22 +1,26 @@
 import pygame
-# import numpy as np
-# from scipy import signal
+
+pygame.mixer.init()
+pygame.mixer.set_num_channels(100)
 
 class SoundManager:
 	def __init__(self):
-		triangle=[]
+		self.triangle=[]
+		self.sine=[]
+		self.selected_sound = self.triangle
 		self.frequency_count = 50
 		for i in range(self.frequency_count):
-			triangle.append(pygame.mixer.Sound('sounds/triangle'+str(i)+'.wav'))
+			self.triangle.append(pygame.mixer.Sound('sounds - Copy/triangle'+str(i+1)+'.wav'))
+			self.sine.append(pygame.mixer.Sound('sounds - Copy/sine'+str(i+1)+'.wav'))
 
 	def select_sound(self, name):
-		if name == "sine":
-			self.select_sound = self.sine
-		elif name == "triangle":
-			self.select_sound = self.triangle
+		if name == "Sine":
+			self.selected_sound = self.sine
+		elif name == "Triangle":
+			self.selected_sound = self.triangle
 		else:
-			self.select_sound = self.triangle
+			self.selected_sound = self.triangle
 
 
 	def play(self, val):
-		self.selected_sound[int(val*self.frequency_count)].play()
+		pygame.mixer.find_channel().play(self.selected_sound[int(val*self.frequency_count)-1])

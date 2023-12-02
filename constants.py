@@ -9,6 +9,7 @@ def tup_add(tup1, tup2):
 
 SORT_NAMES=["Radix Sort", "Bitonic Sort", "Pancake Sort", "Cocktail Shaker Sort", "Stooge Sort", "Cycle Sort"]
 
+# SCREEN_RES = (2560, 1440)
 # SCREEN_RES = (1920, 1080)
 SCREEN_RES = (1280, 720)
 # GAME_RES = (1280, 720)

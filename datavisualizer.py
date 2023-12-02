@@ -9,9 +9,7 @@ class DataVisualizer:
 		self.rect = rect
 
 		self.data_count = data_count
-		self.data = []
-		for i in range(data_count):
-			self.data.append(i+1)
+		self.data = [i+1 for i in range(data_count)]
 
 		self.data_rects = []
 		self.data_colors = []
@@ -31,6 +29,25 @@ class DataVisualizer:
 		self.sort_name=''
 		self.generator=None
 		self.sorting=False
+	
+	def resize(self, size):
+		self.data_count = size
+		self.positions.clear()
+		self.data_colors.clear()
+		self.data_rects.clear()
+		self.data = [i+1 for i in range(self.data_count)]
+		self.data_width = self.rect.w/self.data_count
+		self.data_height = self.rect.h/self.data_count
+		for i in range(self.data_count):
+			self.data_colors.append(WHITE)
+			self.positions.append(i*self.data_width+self.rect.x)
+			self.data_rects.append(pygame.Rect(
+				self.positions[i],
+				self.rect.h+self.rect.y-(self.data[i]*self.data_height),
+				self.data_width-1,
+				self.data_height*self.data[i]))
+		self.sorting = False
+		self.restart_sort()
 	
 	def restart_sort(self):
 		if self.sort_name == "Stooge Sort":
@@ -52,11 +69,11 @@ class DataVisualizer:
 	def step(self):
 		if self.sorting:
 			try:
-				# self.clear_colors()
-				l,h=next(self.generator)
-				# print(self.data)
-				# self.data_colors[l]=GREEN
-				# self.data_colors[h]=GREEN
+				self.clear_colors()
+				p1,p2=next(self.generator)
+				self.data_colors[p1]=GREEN
+				self.data_colors[p2]=GREEN
+				self.sound_manager.play(self.data[p1]/self.data_count)
 			except StopIteration:
 				self.sorting=False
 			
