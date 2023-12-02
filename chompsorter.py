@@ -77,14 +77,21 @@ class ChompSorter:
 
 					if clicked_obj.tag == "Menu":
 						self.data_visualizer.restart_sort()
+						self.data_visualizer.sort_data()
 						self.data_visualizer.sorting=False
 						self.change_scene("MENU")
 
 					if clicked_obj.tag == "Settings":
 						self.change_scene("SETTINGS")
 
-					if clicked_obj.tag == "Shuffle":
+					if clicked_obj.tag == " Sorted ":
+						self.data_visualizer.sort_data()
+
+					if clicked_obj.tag == "Shuffled":
 						self.data_visualizer.shuffle_data()
+
+					if clicked_obj.tag == "Reversed":
+						self.data_visualizer.reverse_data()
 
 					if clicked_obj.tag == "Start":
 						self.data_visualizer.restart_sort()
@@ -92,6 +99,7 @@ class ChompSorter:
 
 					if clicked_obj.tag == "Stop":
 						self.data_visualizer.sorting=False
+					
 
 				if type(clicked_obj) == Slider:
 					self.held_obj = clicked_obj
@@ -106,6 +114,16 @@ class ChompSorter:
 				self.data_visualizer.resize(int(self.held_obj.move(pygame.mouse.get_pos())))
 			if self.held_obj.tag == "Sound Type":
 				self.data_visualizer.sound_manager.select_sound(self.held_obj.tagset[self.held_obj.move(pygame.mouse.get_pos())])
+			
+			# if self.held_obj.tag == "Data Ordering":
+			# 	self.held_obj.move(pygame.mouse.get_pos())
+			# 	tag = self.held_obj.get_tag_selection()
+			# 	if tag=="Sorted":
+			# 		self.data_visualizer.sort_data()
+			# 	elif tag=="Random":
+			# 		self.data_visualizer.shuffle_data()
+			# 	elif tag=="Reversed":
+			# 		self.data_visualizer.reverse_data()
 						
 
 def populate():
@@ -132,22 +150,25 @@ def populate():
 
 	click = []
 	click.append(Button("Menu", (SCREEN_RES[0]*4/8, YPAD)))
-	click.append(Button("Shuffle", (SCREEN_RES[0]*3/8, YPAD)))
+	click.append(Button(" Sorted ", (SCREEN_RES[0]*3/8, YPAD)))
+	click.append(Button("Shuffled", (SCREEN_RES[0]*3/8, YPAD*3)))
+	click.append(Button("Reversed", (SCREEN_RES[0]*3/8, YPAD*5)))
 	click.append(Button("Start", (SCREEN_RES[0]*1/8, YPAD)))
 	click.append(Button("Stop", (SCREEN_RES[0]*2/8, YPAD)))
 	click.append(Slider("Speed", (SCREEN_RES[0]*5/8, YPAD), SCREEN_RES[0]/4, 1, 1000, suffix=" ms (between steps)", reversed=True))
 	period=click[-1].value
 	click.append(Slider("Data Size", (SCREEN_RES[0]*5/8, YPAD*2+THUMB_SIZE[1]), SCREEN_RES[0]/4, 2, (SCREEN_RES[1]-(YPAD*3+THUMB_SIZE[1]*2))*.9))
 	data_size=click[-1].value
+	# click.append(Slider("Data Ordering", (SCREEN_RES[0]*5/8, YPAD*3+THUMB_SIZE[1]*2), SCREEN_RES[0]/4, 0, 2, tagset=["Sorted", "Random", "Reversed"]))
 	draw = []
-	data=DataVisualizer(data_size, pygame.Rect(YPAD*2, YPAD*3+THUMB_SIZE[1]*2, SCREEN_RES[0]-YPAD*4, SCREEN_RES[1]-(YPAD*3+THUMB_SIZE[1]*2)), SoundManager())
+	data=DataVisualizer(data_size, pygame.Rect(YPAD*2, YPAD*6, SCREEN_RES[0]-YPAD*4, SCREEN_RES[1]-(YPAD*6)), SoundManager())
 	draw.append(data)
 	
 	graph_scene = Scene("GRAPH", draw, click)
 
 
 	click=[]
-	click.append(Slider("Sound Type", (SCREEN_RES[0]/16, YPAD), SCREEN_RES[0]/6, 0, 1, tagset=["Triangle", "Sine"]))
+	click.append(Slider("Sound Type", (SCREEN_RES[0]/16, SCREEN_RES[1]/8), SCREEN_RES[0]/6, 0, 1, tagset=["Triangle", "Sine"]))
 	click.append(Button("Menu", (SCREEN_RES[0]-YPAD*2, YPAD)))
 	draw=[]
 	settings_scene = Scene("SETTINGS", draw, click)

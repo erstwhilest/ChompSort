@@ -5,7 +5,7 @@ class Slider(Label):
 	def __init__(self, tag, location, width, slider_min, slider_max, font_size=BTN_FSIZE, suffix="", tagset=[], reversed=False):
 		self.thumb_rect = pygame.Rect((location[0]+width/2-THUMB_SIZE[0]/2, location[1]), THUMB_SIZE)
 		self.track_rect = pygame.Rect((location[0], location[1]+THUMB_SIZE[1]/2-TRACK_HEIGHT/2), (width, TRACK_HEIGHT))
-		self.value = int(slider_max/2)
+		self.value = round(slider_max/2)
 		self.percentage = 0
 		self.min = slider_min
 		self.max = slider_max
@@ -17,6 +17,12 @@ class Slider(Label):
 		self.suffix=suffix
 		self.tagset=tagset
 		self.reversed=reversed
+	
+	def get_tag_selection(self):
+		if self.tagset==[]:
+			return None
+		else:
+			return self.tagset[self.value]
 
 	def render(self, screen):
 		screen.fill(WHITE, self.track_rect)
@@ -31,13 +37,16 @@ class Slider(Label):
 			self.thumb_rect.x=self.track_rect.x+self.track_rect.w-THUMB_SIZE[0]/2
 		else:
 			self.thumb_rect.x=mouse_pos[0]-THUMB_SIZE[0]/2
+
 		if self.reversed:
 			self.percentage=1-max(min(((mouse_pos[0]-self.track_rect.x)/self.track_rect.w), 1), 0)
 		else:
 			self.percentage=max(min(((mouse_pos[0]-self.track_rect.x)/self.track_rect.w), 1), 0)
+
 		self.value = round((self.max-self.min)*self.percentage+self.min)
+
 		if self.tagset != []:
-			self.change_text(self.tag+": "+self.tagset[self.value]+self.suffix)
+			self.change_text(self.tag+": "+self.tagset[round(self.percentage*(len(self.tagset)-1))]+self.suffix)
 		else:
 			self.change_text(self.tag+": "+str(self.value)+self.suffix)
 		return self.value
