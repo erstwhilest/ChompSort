@@ -10,8 +10,8 @@ class SoundManager:
 		self.selected_sound = self.triangle
 		self.frequency_count = 50
 		for i in range(self.frequency_count):
-			self.triangle.append(pygame.mixer.Sound('sounds - Copy/triangle'+str(i+1)+'.wav'))
-			self.sine.append(pygame.mixer.Sound('sounds - Copy/sine'+str(i+1)+'.wav'))
+			self.triangle.append(pygame.mixer.Sound('sounds/triangle'+str(i+1)+'.wav'))
+			self.sine.append(pygame.mixer.Sound('sounds/sine'+str(i+1)+'.wav'))
 
 	def select_sound(self, name):
 		if name == "Sine":
