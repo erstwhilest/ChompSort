@@ -95,3 +95,9 @@ class DataVisualizer:
 
 	def shuffle_data(self):
 		random.shuffle(self.data)
+
+	def reverse_data(self):
+		self.data = [self.data_count-i for i in range(self.data_count)]
+
+	def sort_data(self):
+		self.data = [i+1 for i in range(self.data_count)]
