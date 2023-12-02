@@ -12,24 +12,6 @@ def stooge_sort(arr, l, h):
 		yield from stooge_sort(arr,l,h-temp)
 		yield from stooge_sort(arr,l+temp,h)
 		yield from stooge_sort(arr,l,h-temp)
-	# yield (l,h)
-
-def stooge_sort(arr, l, h):
-	if l >= h:
-		return
-	if arr[l]>arr[h]:
-		arr[l],arr[h]=arr[h],arr[l]
-
-		# PLACE HERE TO SHOW SWAPS
-		yield (l,h)
-
-	if h-l+1>2:
-		temp=int((h-l+1)/3)
-		yield from stooge_sort(arr,l,h-temp)
-		yield from stooge_sort(arr,l+temp,h)
-		yield from stooge_sort(arr,l,h-temp)
-	# yield (l,h)
-
 def cocktail_shaker_sort(array):
 	for i in range(len(array)-1,0,-1):
 		is_swapped = False
