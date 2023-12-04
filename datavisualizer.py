@@ -57,7 +57,8 @@ class DataVisualizer:
 		if self.sort_name == "Stooge Sort":
 			self.generator=sortfunctions.stooge_sort(self.data,0,self.data_count-1)
 		elif self.sort_name == "Cycle Sort":
-			self.generator=sortfunctions.cycle_sort(self.data)
+			#self.generator=sortfunctions.cycle_sort(self.data)
+			pass
 		elif self.sort_name == "Cocktail Shaker Sort":
 			self.generator = sortfunctions.cocktail_shaker_sort(self.data)
 		elif self.sort_name == "Pancake Sort":
@@ -72,7 +73,8 @@ class DataVisualizer:
 		if sort_name == "Stooge Sort":
 			self.generator=sortfunctions.stooge_sort(self.data,0,self.data_count-1)
 		elif sort_name == "Cycle Sort":
-			self.generator=sortfunctions.cycle_sort(self.data)
+			#self.generator=sortfunctions.cycle_sort(self.data)
+			pass
 		elif sort_name == "Cocktail Shaker Sort":
 			self.generator=sortfunctions.cocktail_shaker_sort(self.data)
 		elif sort_name == "Pancake Sort":
