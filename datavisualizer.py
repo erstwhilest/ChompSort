@@ -12,6 +12,7 @@ class DataVisualizer:
 		self.rect = rect
 
 		self.data_count = data_count
+		self.data_count_backround = data_count
 		self.data = [i+1 for i in range(data_count)]
 
 		self.data_rects = []
@@ -33,9 +34,14 @@ class DataVisualizer:
 		self.generator=None
 		self.sorting=False
 		self.complete = False
+
 	
 	def resize(self, size):
-		self.data_count = size
+		if size <= 512:
+			self.data_count = size
+		else:
+			self.data_count = 512
+		self.data_count_backround = size
 		self.positions.clear()
 		self.data_colors.clear()
 		self.data_rects.clear()

@@ -8,6 +8,9 @@ class Scene():
 		self.rects = rects
 	
 	def render(self, screen):
+		#pygame.display.update()
+		#pygame.draw.rect(screen,BLACK, pygame.Rect(SCREEN_RES[1], SCREEN_RES[1], SCREEN_RES[0], SCREEN_RES[0]))
+
 		for obj in self.rects:
 			pygame.draw.rect(screen, ORANGE, obj)
 
