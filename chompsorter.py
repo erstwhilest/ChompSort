@@ -31,6 +31,7 @@ class ChompSorter:
 		self.current_scene.render(self.screen)
 	
 	def loop(self):
+		count = 0
 		while self.running:
 			self.screen.fill(BLACK)
 
@@ -41,6 +42,12 @@ class ChompSorter:
 
 			if self.last_time // self.period != self.time // self.period:
 				self.data_visualizer.step()
+				if self.data_visualizer.complete is True:
+					self.data_visualizer.sorted(count)
+					count += 1
+				else:
+					count = 0
+
 
 			self.render()
 

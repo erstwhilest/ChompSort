@@ -1,5 +1,8 @@
 import pygame
 import random
+import time
+
+import chompsorter
 from constants import *
 import sortfunctions
 
@@ -29,6 +32,7 @@ class DataVisualizer:
 		self.sort_name=''
 		self.generator=None
 		self.sorting=False
+		self.complete = False
 	
 	def resize(self, size):
 		self.data_count = size
@@ -58,6 +62,10 @@ class DataVisualizer:
 			self.generator = sortfunctions.cocktail_shaker_sort(self.data)
 		elif self.sort_name == "Pancake Sort":
 			self.generator = sortfunctions.pancake_sort(self.data)
+		elif self.sort_name == "Radix Sort":
+			self.generator = sortfunctions.radix_sort(self.data)
+		elif self.sort_name == "Bitonic Sort":
+			self.generator = sortfunctions.sort_bitonic(self.data)
 	
 	def set_sort(self, sort_name):
 		self.sort_name=sort_name
@@ -69,6 +77,10 @@ class DataVisualizer:
 			self.generator=sortfunctions.cocktail_shaker_sort(self.data)
 		elif sort_name == "Pancake Sort":
 			self.generator=sortfunctions.pancake_sort(self.data)
+		elif self.sort_name == "Radix Sort":
+			self.generator = sortfunctions.radix_sort(self.data)
+		elif self.sort_name == "Bitonic Sort":
+			self.generator = sortfunctions.sort_bitonic(self.data)
 	
 	def clear_colors(self):
 		for i in range(self.data_count):
@@ -84,7 +96,18 @@ class DataVisualizer:
 				self.sound_manager.play(self.data[p1]/self.data_count)
 			except StopIteration:
 				self.sorting=False
-			
+				self.complete = True
+
+	def sorted(self, count):
+		if count == self.data_count - 1:
+			self.complete = False
+			self.clear_colors()
+			return
+
+		self.data_colors[count] = GREEN
+		self.data_colors[count + 1] = RED
+		print(count, self.data_count)
+		self.sound_manager.play(self.data[count] / self.data_count)
 
 	def render(self, screen):
 		for i in range(self.data_count):
