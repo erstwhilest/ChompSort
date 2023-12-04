@@ -96,7 +96,7 @@ class DataVisualizer:
 
 		self.data_colors[count] = GREEN
 		self.data_colors[count + 1] = RED
-		print(count, self.data_count)
+		# print(count, self.data_count)
 		self.sound_manager.play(self.data[count] / self.data_count)
 
 	def render(self, screen):

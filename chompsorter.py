@@ -5,18 +5,23 @@ from label import Label
 from soundmanager import SoundManager
 from datavisualizer import DataVisualizer
 from slider import Slider
+from pixelarray import PixelArray
 
 class ChompSorter:
-	def __init__(self, scenes, data_visualizer):
+	def __init__(self, scenes, data_visualizer, pixel_array):
 		self.screen = pygame.display.set_mode(SCREEN_RES)
 		pygame.init()
 		pygame.display.set_caption("Chomp Sorter")
+		img=pygame.image.load("CHOMPSORT_ICON_2.jpeg")
+		pygame.display.set_icon(img)
+
 		self.clock = pygame.time.Clock()
 		
 		self.scenes = scenes
 		self.current_scene = scenes[0]
 
 		self.data_visualizer=data_visualizer
+		self.pixel_array=pixel_array
 
 		self.running = True
 
@@ -42,6 +47,7 @@ class ChompSorter:
 
 			if self.last_time // self.period != self.time // self.period:
 				self.data_visualizer.step()
+				self.pixel_array.step()
 				if self.data_visualizer.complete is True:
 					self.data_visualizer.sorted(count)
 					count += 1
@@ -52,7 +58,7 @@ class ChompSorter:
 			self.render()
 
 			pygame.display.update()
-			self.clock.tick(60)
+			self.clock.tick(144)
 
 	def change_scene(self, scene_tag):
 		for scene in self.scenes:
@@ -81,31 +87,47 @@ class ChompSorter:
 					if clicked_obj.tag in SORT_NAMES:
 						self.change_scene("GRAPH")
 						self.data_visualizer.set_sort(clicked_obj.tag)
+						self.pixel_array.set_sort(clicked_obj.tag)
 
 					if clicked_obj.tag == "Menu":
+						self.data_visualizer.sorting=False
+						self.pixel_array.sorting=False
 						self.data_visualizer.restart_sort()
 						self.data_visualizer.sort_data()
-						self.data_visualizer.sorting=False
+						self.pixel_array.restart_sort()
+						self.pixel_array.sort_data()
 						self.change_scene("MENU")
 
 					if clicked_obj.tag == "Settings":
 						self.change_scene("SETTINGS")
 
 					if clicked_obj.tag == " Sorted ":
+						self.data_visualizer.restart_sort()
 						self.data_visualizer.sort_data()
+						self.pixel_array.restart_sort()
+						self.pixel_array.sort_data()
 
 					if clicked_obj.tag == "Shuffled":
+						self.data_visualizer.sorting=False
+						self.pixel_array.sorting=False
+						self.data_visualizer.restart_sort()
 						self.data_visualizer.shuffle_data()
+						self.pixel_array.restart_sort()
+						self.pixel_array.shuffle_data()
 
 					if clicked_obj.tag == "Reversed":
+						self.data_visualizer.sorting=False
+						self.pixel_array.sorting=False
+						self.data_visualizer.restart_sort()
 						self.data_visualizer.reverse_data()
+						self.pixel_array.restart_sort()
+						self.pixel_array.reverse_data()
 
 					if clicked_obj.tag == "Start":
 						self.data_visualizer.restart_sort()
+						self.pixel_array.restart_sort()
 						self.data_visualizer.sorting=True
-
-					if clicked_obj.tag == "Stop":
-						self.data_visualizer.sorting=False
+						self.pixel_array.sorting=True
 					
 
 				if type(clicked_obj) == Slider:
@@ -121,6 +143,7 @@ class ChompSorter:
 				self.data_visualizer.resize(int(self.held_obj.move(pygame.mouse.get_pos())))
 			if self.held_obj.tag == "Sound Type":
 				self.data_visualizer.sound_manager.select_sound(self.held_obj.tagset[self.held_obj.move(pygame.mouse.get_pos())])
+				
 						
 
 def populate():
@@ -143,15 +166,16 @@ def populate():
 	click.append(Button(" Sorted ", (SCREEN_RES[0]*3/8, YPAD*1)))
 	click.append(Button("Shuffled", (SCREEN_RES[0]*3/8, YPAD*3)))
 	click.append(Button("Reversed", (SCREEN_RES[0]*3/8, YPAD*5)))
-	click.append(Button("Start", (SCREEN_RES[0]*1/8, YPAD*3)))
-	click.append(Button("Stop", (SCREEN_RES[0]*2/8, YPAD*3)))
+	click.append(Button("Start", (SCREEN_RES[0]*2/8, YPAD*3)))
 	click.append(Slider("Speed", (SCREEN_RES[0]*5/8, YPAD*2), SCREEN_RES[0]/4, 1, 1000, suffix=" ms (between steps)", reversed=True))
 	period=click[-1].value
 	click.append(Slider("Data Size", (SCREEN_RES[0]*5/8, YPAD*3+THUMB_SIZE[1]), SCREEN_RES[0]/4, 2, (SCREEN_RES[1]-(YPAD*3+THUMB_SIZE[1]*2))*.9, pow2=True))
 	data_size=click[-1].value
 	draw = []
 	data=DataVisualizer(data_size, pygame.Rect(YPAD*2, YPAD*6, SCREEN_RES[0]-YPAD*4, SCREEN_RES[1]-(YPAD*6)), SoundManager())
+	pixel=PixelArray("gator64.jpg", (YPAD*2,0))
 	draw.append(data)
+	draw.append(pixel)
 	
 	graph_scene = Scene("GRAPH", draw, click)
 
@@ -162,6 +186,6 @@ def populate():
 	draw=[]
 	settings_scene = Scene("SETTINGS", draw, click)
 
-	cs=ChompSorter([menu_scene, graph_scene, settings_scene], data)
+	cs=ChompSorter([menu_scene, graph_scene, settings_scene], data, pixel)
 	cs.period=period
 	return cs
