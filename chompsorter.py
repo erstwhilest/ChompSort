@@ -32,6 +32,62 @@ class ChompSorter:
 
 		self.held_obj = None
 
+		self.static_text = [
+			["Radix Sort",
+			 "Radix sort is a non-comparative sorting algorithm that",
+			 "sorts integers by processing individual digits, from",
+			 "the least significant to the most significant, using",
+			 "counting or bucket sort at each digit position.",
+			 "",
+			 "Time Complexity: O(nd)",
+			 "n - number of digits, d - size of largest number"],
+
+			["Bitonic Sort",
+			 "Bitonic sort recursively constructs bitonic sequences,",
+			 "merges adjacent sequences in a bitonic manner, and",
+			 " performs a final bitonic merge to achieve sorting.",
+			 "",
+			 "Time Complexity: O(log^2(n))",
+			 "n - number of elements to be sorted",
+			 ""],
+
+			["Pancake Sort",
+			 "Pancake sort is a inefficient sort that works by",
+			 "repeatedly flipping the elements in the array prefix.",
+			 "It finds the largest unsorted element and flips the",
+			 "subarray to bring the largest element to the end.",
+			 "",
+			 "Time Complexity: O(n^2)",
+			 "n - number of elements to be sorted"],
+
+			["Cocktail Shaker Sort",
+			 "Basically a bi-directional bubble sort algorithm.",
+			 "It works by  traversing the array in both directions,",
+			 "comparing adjacent elements, bubbling large elements",
+			 "to the end, and then the smallest to the beginning.",
+			 "",
+			 "Time Complexity: O(n^2)",
+			 "n - number of elements to be sorted"],
+
+			["Stooge Sort",
+			 "It divides the array into three parts and recursively",
+			 "sorts the first 2/3 and last 2/3 of the array. This",
+			 "process continues until the the entire array is sorted",
+			 "by recursively sorting the first two-thirds again.",
+			 "",
+			 "Time Complexity: O(n^(log3/log1.5)",
+			 "n - number of elements to be sorted"],
+
+			["Cycle Sort",
+			 "The basic idea behind cycle sort is to divide the input",
+			 "array into cycles, where each cycle consists of elements",
+			 "that belong to the same position in the sorted array.",
+			 "The algorithm then swaps each element in its cycle",
+			 "",
+			 "Time Complexity: O(n^2)",
+			 "n - number of elements to be sorted"]
+		]
+
 	def render(self):
 		self.current_scene.render(self.screen)
 	
@@ -128,7 +184,30 @@ class ChompSorter:
 						self.pixel_array.restart_sort()
 						self.data_visualizer.sorting=True
 						self.pixel_array.sorting=True
-					
+
+					if clicked_obj.tag == "Info":
+						self.change_scene("INFO")
+						if self.data_visualizer.sort_name == "Radix Sort":
+							for index, item in enumerate(self.scenes[3].drawables):
+								item.change_text(self.static_text[0][index])
+						elif self.data_visualizer.sort_name == "Bitonic Sort":
+							for index, item in enumerate(self.scenes[3].drawables):
+								item.change_text(self.static_text[1][index])
+						elif self.data_visualizer.sort_name == "Pancake Sort":
+							for index, item in enumerate(self.scenes[3].drawables):
+								item.change_text(self.static_text[2][index])
+						elif self.data_visualizer.sort_name == "Cocktail Shaker Sort":
+							for index, item in enumerate(self.scenes[3].drawables):
+								item.change_text(self.static_text[3][index])
+						elif self.data_visualizer.sort_name == "Stooge Sort":
+							for index, item in enumerate(self.scenes[3].drawables):
+								item.change_text(self.static_text[4][index])
+						elif self.data_visualizer.sort_name == "Cycle Sort":
+							for index, item in enumerate(self.scenes[3].drawables):
+								item.change_text(self.static_text[5][index])
+
+					if clicked_obj.tag == "exit":
+						self.change_scene("GRAPH")
 
 				if type(clicked_obj) == Slider:
 					self.held_obj = clicked_obj
@@ -163,6 +242,7 @@ def populate():
 
 	click = []
 	click.append(Button("Menu", (SCREEN_RES[0]*4/8, YPAD*3)))
+	click.append(Button("Info", (SCREEN_RES[0] * 4 / 8, YPAD*5)))
 	click.append(Button(" Sorted ", (SCREEN_RES[0]*3/8, YPAD*1)))
 	click.append(Button("Shuffled", (SCREEN_RES[0]*3/8, YPAD*3)))
 	click.append(Button("Reversed", (SCREEN_RES[0]*3/8, YPAD*5)))
@@ -186,6 +266,25 @@ def populate():
 	draw=[]
 	settings_scene = Scene("SETTINGS", draw, click)
 
-	cs=ChompSorter([menu_scene, graph_scene, settings_scene], data, pixel)
+	info_btns = []
+	info_btns.append(Button("", (SCREEN_RES[0]/2, SCREEN_RES[1]/2), btn_size=(SCREEN_RES[0]/1.2, SCREEN_RES[1]/1.5)))
+	info_btns.append(Button("exit", (SCREEN_RES[0] - YPAD * 2 - BTN_PAD, SCREEN_RES[1] - YPAD - BTN_PAD)))
+
+	draw = []
+	draw.append(Label("", (SCREEN_RES[0] / 2, SCREEN_RES[1] / 4)))
+	draw.append(Label("", (SCREEN_RES[0] / 2, SCREEN_RES[1] * 2 / 4 - 2 * INFO_LBL_FSIZE * 1.3), INFO_LBL_FSIZE))
+	draw.append(Label("", (SCREEN_RES[0] / 2, SCREEN_RES[1] * 2 / 4 - INFO_LBL_FSIZE * 1.3), INFO_LBL_FSIZE))
+	draw.append(Label("", (SCREEN_RES[0] / 2, SCREEN_RES[1] * 2 / 4), INFO_LBL_FSIZE))
+	draw.append(Label("", (SCREEN_RES[0] / 2, SCREEN_RES[1] * 2 / 4 + INFO_LBL_FSIZE * 1.3), INFO_LBL_FSIZE))
+	draw.append(Label("", (SCREEN_RES[0] / 2, SCREEN_RES[1] * 2 / 4 + 2 * INFO_LBL_FSIZE * 1.3), INFO_LBL_FSIZE))
+	draw.append(Label("", (SCREEN_RES[0] / 2, SCREEN_RES[1] * 2 / 4 + 3 * INFO_LBL_FSIZE * 1.3), INFO_LBL_FSIZE))
+	draw.append(Label("", (SCREEN_RES[0] / 2, SCREEN_RES[1] * 2 / 4 + 4 * INFO_LBL_FSIZE * 1.3), INFO_LBL_FSIZE))
+
+	#rects = []
+	#rects.append(pygame.Rect(100, 50, 200, 100))
+
+	info_scene = Scene("INFO", draw, info_btns)
+
+	cs=ChompSorter([menu_scene, graph_scene, settings_scene, info_scene], data, pixel)
 	cs.period=period
 	return cs
