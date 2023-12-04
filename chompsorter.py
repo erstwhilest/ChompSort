@@ -121,16 +121,6 @@ class ChompSorter:
 				self.data_visualizer.resize(int(self.held_obj.move(pygame.mouse.get_pos())))
 			if self.held_obj.tag == "Sound Type":
 				self.data_visualizer.sound_manager.select_sound(self.held_obj.tagset[self.held_obj.move(pygame.mouse.get_pos())])
-			
-			# if self.held_obj.tag == "Data Ordering":
-			# 	self.held_obj.move(pygame.mouse.get_pos())
-			# 	tag = self.held_obj.get_tag_selection()
-			# 	if tag=="Sorted":
-			# 		self.data_visualizer.sort_data()
-			# 	elif tag=="Random":
-			# 		self.data_visualizer.shuffle_data()
-			# 	elif tag=="Reversed":
-			# 		self.data_visualizer.reverse_data()
 						
 
 def populate():
@@ -149,12 +139,6 @@ def populate():
 	menu_scene = Scene("MENU", draw, btns)
 
 
-
-
-
-
-
-
 	click = []
 	click.append(Button("Menu", (SCREEN_RES[0]*4/8, YPAD)))
 	click.append(Button(" Sorted ", (SCREEN_RES[0]*3/8, YPAD)))
@@ -166,7 +150,6 @@ def populate():
 	period=click[-1].value
 	click.append(Slider("Data Size", (SCREEN_RES[0]*5/8, YPAD*2+THUMB_SIZE[1]), SCREEN_RES[0]/4, 2, (SCREEN_RES[1]-(YPAD*3+THUMB_SIZE[1]*2))*.9, pow2=True))
 	data_size=click[-1].value
-	# click.append(Slider("Data Ordering", (SCREEN_RES[0]*5/8, YPAD*3+THUMB_SIZE[1]*2), SCREEN_RES[0]/4, 0, 2, tagset=["Sorted", "Random", "Reversed"]))
 	draw = []
 	data=DataVisualizer(data_size, pygame.Rect(YPAD*2, YPAD*6, SCREEN_RES[0]-YPAD*4, SCREEN_RES[1]-(YPAD*6)), SoundManager())
 	draw.append(data)
