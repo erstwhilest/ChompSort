@@ -138,13 +138,6 @@ def populate():
 
 	menu_scene = Scene("MENU", draw, btns)
 
-	# added data blah blah blah
-
-
-
-
-
-
 	click = []
 	click.append(Button("Menu", (SCREEN_RES[0]*4/8, YPAD)))
 	click.append(Button(" Sorted ", (SCREEN_RES[0]*3/8, YPAD)))
