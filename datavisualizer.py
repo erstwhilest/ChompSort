@@ -40,6 +40,7 @@ class DataVisualizer:
 		self.sorting=False
 		self.complete = False
 
+
 	
 	def resize(self, size):
 		if size <= 512:

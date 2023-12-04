@@ -269,6 +269,7 @@ def populate():
 	pixel=PixelArray("gator64.jpg", (YPAD*2,0))
 	draw.append(data)
 	draw.append(pixel)
+
 	#for run_time
 	draw.append(Label("0 ms",(SCREEN_RES[0]*2/8, YPAD*4),32))
 	graph_scene = Scene("GRAPH", draw, click)
