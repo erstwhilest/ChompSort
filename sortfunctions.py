@@ -1,3 +1,110 @@
+#radix sort + helper functions
+def counting_sort(arr, exp):
+	n = len(arr)
+	output = [0] * n
+	count = [0] * 10
+
+	for i in range(n):
+		index = arr[i] // exp
+		count[index % 10] += 1
+
+	for i in range(1, 10):
+		count[i] += count[i - 1]
+
+	i = n - 1
+	while i >= 0:
+		index = arr[i] // exp
+		output[count[index % 10] - 1] = arr[i]
+		count[index % 10] -= 1
+		i -= 1
+
+	for i in range(n):
+		arr[i] = output[i]
+		yield i, i
+
+def radix_sort(arr):
+	max_num = max(arr)
+	exp = 1
+
+	while max_num // exp > 0:
+		yield from counting_sort(arr, exp)
+		exp *= 10
+
+
+
+#bitonic sort + helper functions
+def compare_and_swap(arr, i, j, direction):
+	if (arr[i] > arr[j] and direction) or (arr[i] < arr[j] and not direction):
+		arr[i], arr[j] = arr[j], arr[i]
+		yield i, j  # yield the swapped values
+
+# merges the chunks together called by sort
+def bitonic_merge(arr, l, count, direction):
+	if count > 1:
+		k = count // 2
+		for i in range(l, l + k):
+			yield from compare_and_swap(arr, i, i + k, direction)
+		yield from bitonic_merge(arr, l, k, direction)
+		yield from bitonic_merge(arr, l + k, k, direction)
+
+# Sorts a part of the list in ascending order, then another part in descending order
+# then merges it back together
+def bitonic_sort(arr, l, count, direction):
+	if count > 1:
+		k = count // 2
+		yield from bitonic_sort(arr, l, k, True)
+		yield from bitonic_sort(arr, l + k, k, False)
+		yield from bitonic_merge(arr, l, count, direction)
+
+
+def sort_bitonic(arr):
+	n = len(arr)
+	direction = True  # True represents sorting in ascending order, False for descending
+	yield from bitonic_sort(arr, 0, n, direction)
+	
+
+def cycle_sort(array):
+	writes = 0
+
+	for cycle_start in range(0, len(array) - 1):
+		item = array[cycle_start]
+
+		pos = cycle_start
+		for i in range(cycle_start + 1, len(array)):
+			if array[i] < item:
+				# yield (i, item-1)
+				# yield
+				pos += 1
+
+		if pos == cycle_start:
+			continue
+
+		while item == array[pos]:
+			pos += 1
+		
+		array[pos], item = item, array[pos]
+		writes += 1
+
+		yield (cycle_start, pos)
+		# yield
+
+		while pos != cycle_start:
+
+			pos = cycle_start
+			for i in range(cycle_start + 1, len(array)):
+				if array[i] < item:
+					# yield (i, item-1)
+					# yield
+					pos += 1
+
+			while item == array[pos]:
+				pos += 1
+			array[pos], item = item, array[pos]
+			writes += 1
+
+			yield (item-1, pos)
+			# yield
+
 def stooge_sort(arr, l, h):
 	if l >= h:
 		return
@@ -12,6 +119,8 @@ def stooge_sort(arr, l, h):
 		yield from stooge_sort(arr,l,h-temp)
 		yield from stooge_sort(arr,l+temp,h)
 		yield from stooge_sort(arr,l,h-temp)
+	# yield (l,h)
+
 def cocktail_shaker_sort(array):
 	for i in range(len(array)-1,0,-1):
 		is_swapped = False
@@ -77,73 +186,3 @@ def pancake_sort(arr):
 			flip(arr, n - 1)
 		n -= 1
 		yield(n,n)
-
-
-
-
-
-
-#radix sort + helper functions
-def counting_sort(arr, exp):
-    n = len(arr)
-    output = [0] * n
-    count = [0] * 10
-
-    for i in range(n):
-        index = arr[i] // exp
-        count[index % 10] += 1
-
-    for i in range(1, 10):
-        count[i] += count[i - 1]
-
-    i = n - 1
-    while i >= 0:
-        index = arr[i] // exp
-        output[count[index % 10] - 1] = arr[i]
-        count[index % 10] -= 1
-        i -= 1
-
-    for i in range(n):
-        arr[i] = output[i]
-        yield i, i
-
-def radix_sort(arr):
-    max_num = max(arr)
-    exp = 1
-
-    while max_num // exp > 0:
-        yield from counting_sort(arr, exp)
-        exp *= 10
-
-
-
-#bitonic sort + helper functions
-def compare_and_swap(arr, i, j, direction):
-    if (arr[i] > arr[j] and direction) or (arr[i] < arr[j] and not direction):
-        arr[i], arr[j] = arr[j], arr[i]
-        yield i, j  # yield the swapped values
-
-# merges the chunks together called by sort
-def bitonic_merge(arr, l, count, direction):
-    if count > 1:
-        k = count // 2
-        for i in range(l, l + k):
-            yield from compare_and_swap(arr, i, i + k, direction)
-        yield from bitonic_merge(arr, l, k, direction)
-        yield from bitonic_merge(arr, l + k, k, direction)
-
-# Sorts a part of the list in ascending order, then another part in descending order
-# then merges it back together
-def bitonic_sort(arr, l, count, direction):
-    if count > 1:
-        k = count // 2
-        yield from bitonic_sort(arr, l, k, True)
-        yield from bitonic_sort(arr, l + k, k, False)
-        yield from bitonic_merge(arr, l, count, direction)
-
-
-def sort_bitonic(arr):
-    n = len(arr)
-    direction = True  # True represents sorting in ascending order, False for descending
-    yield from bitonic_sort(arr, 0, n, direction)
-	

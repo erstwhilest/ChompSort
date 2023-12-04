@@ -164,7 +164,7 @@ def populate():
 	click.append(Button("Stop", (SCREEN_RES[0]*2/8, YPAD)))
 	click.append(Slider("Speed", (SCREEN_RES[0]*5/8, YPAD), SCREEN_RES[0]/4, 1, 1000, suffix=" ms (between steps)", reversed=True))
 	period=click[-1].value
-	click.append(Slider("Data Size", (SCREEN_RES[0]*5/8, YPAD*2+THUMB_SIZE[1]), SCREEN_RES[0]/4, 2, (SCREEN_RES[1]-(YPAD*3+THUMB_SIZE[1]*2))*.9))
+	click.append(Slider("Data Size", (SCREEN_RES[0]*5/8, YPAD*2+THUMB_SIZE[1]), SCREEN_RES[0]/4, 2, (SCREEN_RES[1]-(YPAD*3+THUMB_SIZE[1]*2))*.9, pow2=True))
 	data_size=click[-1].value
 	# click.append(Slider("Data Ordering", (SCREEN_RES[0]*5/8, YPAD*3+THUMB_SIZE[1]*2), SCREEN_RES[0]/4, 0, 2, tagset=["Sorted", "Random", "Reversed"]))
 	draw = []
