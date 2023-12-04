@@ -110,9 +110,8 @@ class ChompSorter:
 				else:
 					count = 0
 
-
+			self.screen.fill(BLACK)
 			self.render()
-
 			pygame.display.update()
 			self.clock.tick(144)
 
@@ -127,7 +126,13 @@ class ChompSorter:
 		for event in pygame.event.get():
 			if event.type == pygame.QUIT:
 				self.running = False
-			
+
+			if self.data_visualizer.data_count_backround != self.data_visualizer.data_count:
+				self.scenes[1].drawables[0].change_text("Note: Max Visualization 512")
+			else:
+				self.scenes[1].drawables[0].change_text(" ")
+
+
 			if event.type  == pygame.KEYDOWN:
 				if event.key == pygame.K_RETURN:
 					pass
@@ -209,6 +214,7 @@ class ChompSorter:
 					if clicked_obj.tag == "exit":
 						self.change_scene("GRAPH")
 
+
 				if type(clicked_obj) == Slider:
 					self.held_obj = clicked_obj
 			
@@ -246,14 +252,16 @@ def populate():
 	click.append(Button(" Sorted ", (SCREEN_RES[0]*3/8, YPAD*1)))
 	click.append(Button("Shuffled", (SCREEN_RES[0]*3/8, YPAD*3)))
 	click.append(Button("Reversed", (SCREEN_RES[0]*3/8, YPAD*5)))
-	click.append(Button("Start", (SCREEN_RES[0]*2/8, YPAD*3)))
+	click.append(Button("Start", (SCREEN_RES[0]*2/8, YPAD*1)))
 	click.append(Slider("Speed", (SCREEN_RES[0]*5/8, YPAD*2), SCREEN_RES[0]/4, 1, 1000, suffix=" ms (between steps)", reversed=True))
 	period=click[-1].value
-	click.append(Slider("Data Size", (SCREEN_RES[0]*5/8, YPAD*3+THUMB_SIZE[1]), SCREEN_RES[0]/4, 2, (SCREEN_RES[1]-(YPAD*3+THUMB_SIZE[1]*2))*.9, pow2=True))
+	click.append(Slider("Data Size", (SCREEN_RES[0]*5/8, YPAD*3+THUMB_SIZE[1]), SCREEN_RES[0]/4, 2, 131072, pow2=True))
 	data_size=click[-1].value
+
 	draw = []
 	data=DataVisualizer(data_size, pygame.Rect(YPAD*2, YPAD*6, SCREEN_RES[0]-YPAD*4, SCREEN_RES[1]-(YPAD*6)), SoundManager())
 	pixel=PixelArray("gator64.jpg", (YPAD*2,0))
+	draw.append(Label("", (SCREEN_RES[0] / 2 + 325, SCREEN_RES[1] / 4 - 16), BTN_FSIZE))
 	draw.append(data)
 	draw.append(pixel)
 	
