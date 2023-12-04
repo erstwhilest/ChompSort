@@ -181,17 +181,17 @@ def test(sortfunction, data):
         end = time.time()
         return (end-start)*1000
     elif(sortfunction == "Radix Sort"):
-		start = time.time()
-		radix_sort(data)
-		end = time.time()
-		return(end-start)*1000
+        start = time.time()
+        radix_sort(data)
+        end = time.time()
+        return(end-start)*1000
     elif(sortfunction == "Cycle Sort"):
-		start = time.time()
-		cycle_sort(data)
-		end = time.time()
-		return (end-start)*1000
+        start = time.time()
+        cycle_sort(data)
+        end = time.time()
+        return (end-start)*1000
     elif(sortfunction == "Bitonic Sort"):
-		start = time.time()
-		sort_bitonic(data)
-		end = time.time()
-		return (end-start)*1000
+        start = time.time()
+        sort_bitonic(data)
+        end = time.time()
+        return (end-start)*1000
