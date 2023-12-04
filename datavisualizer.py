@@ -54,18 +54,8 @@ class DataVisualizer:
 		self.restart_sort()
 	
 	def restart_sort(self):
-		if self.sort_name == "Stooge Sort":
-			self.generator=sortfunctions.stooge_sort(self.data,0,self.data_count-1)
-		elif self.sort_name == "Cycle Sort":
-			self.generator=sortfunctions.cycle_sort(self.data)
-		elif self.sort_name == "Cocktail Shaker Sort":
-			self.generator = sortfunctions.cocktail_shaker_sort(self.data)
-		elif self.sort_name == "Pancake Sort":
-			self.generator = sortfunctions.pancake_sort(self.data)
-		elif self.sort_name == "Radix Sort":
-			self.generator = sortfunctions.radix_sort(self.data)
-		elif self.sort_name == "Bitonic Sort":
-			self.generator = sortfunctions.sort_bitonic(self.data)
+		self.set_sort(self.sort_name)
+		self.clear_colors()
 	
 	def set_sort(self, sort_name):
 		self.sort_name=sort_name

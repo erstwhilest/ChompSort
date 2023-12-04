@@ -139,15 +139,15 @@ def populate():
 	menu_scene = Scene("MENU", draw, btns)
 
 	click = []
-	click.append(Button("Menu", (SCREEN_RES[0]*4/8, YPAD)))
-	click.append(Button(" Sorted ", (SCREEN_RES[0]*3/8, YPAD)))
+	click.append(Button("Menu", (SCREEN_RES[0]*4/8, YPAD*3)))
+	click.append(Button(" Sorted ", (SCREEN_RES[0]*3/8, YPAD*1)))
 	click.append(Button("Shuffled", (SCREEN_RES[0]*3/8, YPAD*3)))
 	click.append(Button("Reversed", (SCREEN_RES[0]*3/8, YPAD*5)))
-	click.append(Button("Start", (SCREEN_RES[0]*1/8, YPAD)))
-	click.append(Button("Stop", (SCREEN_RES[0]*2/8, YPAD)))
-	click.append(Slider("Speed", (SCREEN_RES[0]*5/8, YPAD), SCREEN_RES[0]/4, 1, 1000, suffix=" ms (between steps)", reversed=True))
+	click.append(Button("Start", (SCREEN_RES[0]*1/8, YPAD*3)))
+	click.append(Button("Stop", (SCREEN_RES[0]*2/8, YPAD*3)))
+	click.append(Slider("Speed", (SCREEN_RES[0]*5/8, YPAD*2), SCREEN_RES[0]/4, 1, 1000, suffix=" ms (between steps)", reversed=True))
 	period=click[-1].value
-	click.append(Slider("Data Size", (SCREEN_RES[0]*5/8, YPAD*2+THUMB_SIZE[1]), SCREEN_RES[0]/4, 2, (SCREEN_RES[1]-(YPAD*3+THUMB_SIZE[1]*2))*.9, pow2=True))
+	click.append(Slider("Data Size", (SCREEN_RES[0]*5/8, YPAD*3+THUMB_SIZE[1]), SCREEN_RES[0]/4, 2, (SCREEN_RES[1]-(YPAD*3+THUMB_SIZE[1]*2))*.9, pow2=True))
 	data_size=click[-1].value
 	draw = []
 	data=DataVisualizer(data_size, pygame.Rect(YPAD*2, YPAD*6, SCREEN_RES[0]-YPAD*4, SCREEN_RES[1]-(YPAD*6)), SoundManager())
