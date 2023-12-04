@@ -1,19 +1,24 @@
 import pygame
 import random
 import time
-
-import chompsorter
+import math
 from constants import *
 import sortfunctions
+import testsorts
 
 class DataVisualizer:
 	def __init__(self, data_count=1, rect=pygame.Rect(0,0,0,0), sound_manager=None):
 		self.sound_manager = sound_manager
 		self.rect = rect
 
+		self.time_taken = 0.0
 		self.data_count = data_count
 		self.data_count_backround = data_count
 		self.data = [i+1 for i in range(data_count)]
+
+		self.unsorted_data = self.data.copy()
+
+		self.display_time_taken = False
 
 		self.data_rects = []
 		self.data_colors = []
@@ -58,6 +63,7 @@ class DataVisualizer:
 				self.data_height*self.data[i]))
 		self.sorting = False
 		self.restart_sort()
+		self.unsorted_data = self.data.copy()
 	
 	def restart_sort(self):
 		self.set_sort(self.sort_name)
@@ -96,10 +102,11 @@ class DataVisualizer:
 
 	def sorted(self, count):
 		if count == self.data_count - 1:
+			self.time_taken = testsorts.test(self.sort_name,self.unsorted_data)
 			self.complete = False
 			self.clear_colors()
+			self.display_time_taken = True
 			return
-
 		self.data_colors[count] = GREEN
 		self.data_colors[count + 1] = RED
 		# print(count, self.data_count)
@@ -114,9 +121,12 @@ class DataVisualizer:
 
 	def shuffle_data(self):
 		random.shuffle(self.data)
+		self.unsorted_data = self.data.copy()
 
 	def reverse_data(self):
 		self.data = [self.data_count-i for i in range(self.data_count)]
+		self.unsorted_data = self.data.copy()
 
 	def sort_data(self):
 		self.data = [i+1 for i in range(self.data_count)]
+		self.unsorted_data = self.data.copy()
