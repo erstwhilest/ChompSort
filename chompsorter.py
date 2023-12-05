@@ -48,7 +48,7 @@ class ChompSorter:
              "merges adjacent sequences in a bitonic manner, and",
              " performs a final bitonic merge to achieve sorting.",
              "",
-             "Time Complexity: O(log^2(n))",
+             "Time Complexity: O(n*log^2(n))",
              "n - number of elements to be sorted",
              ""],
 
